@@ -1,10 +1,32 @@
-#!/usr/bin/env python
-import os
-import sys
+# -*- coding: utf-8 -*-
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
 
-if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gettingstarted.settings")
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-    from django.core.management import execute_from_command_line
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-    execute_from_command_line(sys.argv)
+app.layout = html.Div(children=[
+    html.H1(children='Hello Dash'),
+
+    html.Div(children='''
+        Dash: A web application framework for Python.
+    '''),
+
+    dcc.Graph(
+        id='example-graph',
+        figure={
+            'data': [
+                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
+                {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
+            ],
+            'layout': {
+                'title': 'Dash Data Visualization'
+            }
+        }
+    )
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
